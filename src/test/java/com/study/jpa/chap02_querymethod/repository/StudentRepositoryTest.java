@@ -124,4 +124,53 @@ class StudentRepositoryTest {
 
     }
 
+    @Test
+    @DisplayName("findCityWithJPQLTEST")
+    void findCityWithJPQLTEST() {
+
+        //given
+        String city = "한양도성";
+
+        //when
+        Student student = studentRepository.getByCityWithJPQL(city);
+
+        //then
+        assertEquals("대길이", student.getName());
+        System.out.println("student = " + student);
+
+    }
+
+
+    @Test
+    @DisplayName("searchByNameJPQLTest")
+    void searchByNameJPQLTest() {
+        // given
+        String name = "춘";
+
+        // when
+        List<Student> students = studentRepository.searchByNamesWithJPQL(name);
+
+        // then
+        assertEquals(2, students.size());
+
+        students.forEach(System.out::println);
+
+    }
+
+    @Test
+    @DisplayName("deleteWithJPQLTest")
+    void deleteWithJPQLTest() {
+
+        // given
+        String name = "대길이";
+
+        // when
+        studentRepository.deleteByNameWithJPQL(name);
+        List<Student> students = studentRepository.findByName(name);
+
+        // then
+        assertEquals(0, students.size());
+
+    }
+
 }
