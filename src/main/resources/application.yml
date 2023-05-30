@@ -8,7 +8,7 @@ spring:
     password: 1234
     driver-class-name: org.mariadb.jdbc.Driver
   jpa:
-    show-sql: true # 자동 생성된 쿼리를 보여주는 옵션
+#    show-sql: true # 자동 생성된 쿼리를 보여주는 옵션
     # 로그가 나올 때 어떤 디비에 맞게 나오는지 설정
     database-platform: org.hibernate.dialect.MariaDB106Dialect
     hibernate:
@@ -17,3 +17,6 @@ spring:
       hibernate:
         format_sql: true # sql을 줄바꿈해서 이쁘게 출력
     database: mysql
+
+logging.level:
+  org.hibernate.SQL: debug
