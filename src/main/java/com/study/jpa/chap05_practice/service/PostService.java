@@ -1,9 +1,7 @@
 package com.study.jpa.chap05_practice.service;
 
-import com.study.jpa.chap05_practice.dto.PageDTO;
-import com.study.jpa.chap05_practice.dto.PageResponseDTO;
-import com.study.jpa.chap05_practice.dto.PostDetailResponseDTO;
-import com.study.jpa.chap05_practice.dto.PostListResponseDTO;
+import com.study.jpa.chap05_practice.dto.*;
+import com.study.jpa.chap05_practice.entity.HashTag;
 import com.study.jpa.chap05_practice.entity.Post;
 import com.study.jpa.chap05_practice.repository.HashTagRepository;
 import com.study.jpa.chap05_practice.repository.PostRepository;
@@ -55,5 +53,39 @@ public class PostService {
                 .pageInfo(new PageResponseDTO<Post>(posts)) //
                 .posts(detailList) //
                 .build();
+    }
+
+    public PostDetailResponseDTO getDetail(Long id) {
+        Post postEntity = postRepository.findById(id).orElseThrow(
+                () -> new RuntimeException(id + "번 게시물이 존재하지 않습니다.")
+        );
+
+        return new PostDetailResponseDTO(postEntity);
+    }
+
+    public PostDetailResponseDTO insert(final PostCreateDTO dto) throws RuntimeException {
+
+        // 게시물 저장
+        Post saved = postRepository.save(dto.toEntity());
+
+        // 해시태그 저장
+        List<String> hashTags = dto.getHashTags();
+
+        if (hashTags.size() > 0) {
+            hashTags.forEach(ht -> {
+
+                HashTag savedTag = hashTagRepository.save(
+                        HashTag.builder()
+                                .tagName(ht)
+                                .post(saved)
+                                .build()
+                );
+
+                saved.addHashTag(savedTag);
+
+            });
+        }
+
+        return new PostDetailResponseDTO(saved);
     }
 }

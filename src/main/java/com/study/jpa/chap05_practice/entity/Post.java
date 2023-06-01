@@ -40,5 +40,15 @@ public class Post {
     private LocalDateTime updateDate; // 수정 시간
 
     @OneToMany(mappedBy = "post") // 상대편의 맵핑 이름(필드이름)
+    @Builder.Default // 빌더를 사용하게 되면 필드 초기화가 안 됨. 따로 기본값을 주고 싶을 때 사용
     private List<HashTag> hashTags = new ArrayList<>();
+
+    // 양방향 매핑에서 리스트쪽에 데이터를 추가하는 편의 메서드 생성
+    public void addHashTag(HashTag hashTag) {
+        hashTags.add(hashTag);
+
+        if (this != hashTag.getPost()) {
+            hashTag.setPost(this);
+        }
+    }
 }
