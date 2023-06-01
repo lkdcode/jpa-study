@@ -19,13 +19,13 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 @Transactional
 @Rollback(false)
-@WebAppConfiguration
+//@WebAppConfiguration
 class DepartmentRepositoryTest {
 
-//    @Autowired
+    @Autowired
     DepartmentRepository departmentRepository;
 
-//    @Autowired
+    @Autowired
     EmployeeRepository employeeRepository;
 
 

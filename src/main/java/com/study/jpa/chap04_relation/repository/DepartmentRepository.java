@@ -7,6 +7,6 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface DepartmentRepository extends JpaRepository<Department, Long> {
-    @Query("SELECT DISTINCT d FROM Department d JOIN FETCH d.employee")
+    @Query("SELECT DISTINCT d FROM Department d JOIN FETCH d.employees")
     List<Department> findAllIncludeEmployees();
 }

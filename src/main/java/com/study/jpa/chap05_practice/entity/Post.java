@@ -28,6 +28,8 @@ public class Post {
     @Column(nullable = false) // NOT NULL
     private String writer; // 작성자
 
+    @Column(nullable = false) // NOT NULL
+    private String title; // 제목
     private String content; // 게시글 내용
 
     @CreationTimestamp
