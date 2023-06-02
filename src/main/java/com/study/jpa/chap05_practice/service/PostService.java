@@ -56,12 +56,12 @@ public class PostService {
     }
 
     public PostDetailResponseDTO getDetail(Long id) {
-        Post postEntity = postRepository.findById(id).orElseThrow(
-                () -> new RuntimeException(id + "번 게시물이 존재하지 않습니다.")
-        );
+
+        Post postEntity = getPost(id);
 
         return new PostDetailResponseDTO(postEntity);
     }
+
 
     public PostDetailResponseDTO insert(final PostCreateDTO dto) throws RuntimeException {
 
@@ -87,5 +87,31 @@ public class PostService {
         }
 
         return new PostDetailResponseDTO(saved);
+    }
+
+    public PostDetailResponseDTO modify(PostModifyDTO dto) {
+        // 수정 전 데이터를 조회
+        Post postEntity = getPost(dto.getPostNo());
+
+        // 수정 시작
+        postEntity.setTitle(dto.getTitle());
+        postEntity.setContent(dto.getContent());
+
+        // 수정 완료
+        Post saved = postRepository.save(postEntity);
+
+        return new PostDetailResponseDTO(saved);
+    }
+
+    private Post getPost(Long id) {
+        return postRepository.findById(id)
+                .orElseThrow(
+                        () -> new RuntimeException(id + "번 게시물이 존재하지 않습니다."));
+    }
+
+    public void delete(Long id) {
+
+        postRepository.deleteById(id);
+
     }
 }

@@ -1,6 +1,7 @@
 package com.study.jpa.chap04_relation.entity;
 
 import lombok.*;
+import net.bytebuddy.utility.nullability.NeverNull;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -29,6 +30,7 @@ public class Department {
     // mappedBy 에는 상대방 엔티티의 조인되는 필드명을 써줌
     // 반드시 초기화를 해주어야 함.
     @OneToMany(mappedBy = "department") // 조회 전용
+    @Builder.Default
     private List<Employee> employees = new ArrayList<>();
 
 }

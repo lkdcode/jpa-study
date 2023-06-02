@@ -39,7 +39,7 @@ public class Post {
     @UpdateTimestamp
     private LocalDateTime updateDate; // 수정 시간
 
-    @OneToMany(mappedBy = "post") // 상대편의 맵핑 이름(필드이름)
+    @OneToMany(mappedBy = "post", orphanRemoval = true) // 상대편의 맵핑 이름(필드이름)
     @Builder.Default // 빌더를 사용하게 되면 필드 초기화가 안 됨. 따로 기본값을 주고 싶을 때 사용
     private List<HashTag> hashTags = new ArrayList<>();
 
